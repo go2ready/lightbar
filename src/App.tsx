@@ -1,26 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
 
-const App: React.FC = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Paper from '@material-ui/core/Paper';
+
+import { Theme } from '@material-ui/core/styles/createMuiTheme';
+import { withStyles, WithStyles, createStyles  } from '@material-ui/core/styles';
+
+const styles = (theme: Theme) => createStyles({
+  root: {
+    ...theme.mixins.gutters(),
+    textAlign: 'center',
+  },
+  centerRoot: {
+    ...theme.mixins.gutters(),
+    textAlign: 'center',
+    maxWidth: '500px',
+  },
+  shareIcon: {
+    textAlign: 'center',
+    display: 'inline',
+  },
+});
+
+export interface IAppProps extends WithStyles<typeof styles> {
 }
 
-export default App;
+export const App = withStyles(styles)(
+  class App extends Component<IAppProps> {
+    render() {
+      const { classes } = this.props;
+      return (
+        <React.Fragment>
+          <CssBaseline />
+          {
+            <div>
+              <Paper className={classes.root} elevation={1}>
+              </Paper> 
+            </div>
+          }
+        </React.Fragment>
+      );
+    }
+
+  }
+);
