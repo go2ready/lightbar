@@ -4,7 +4,7 @@ import { ActionType, StateType } from 'typesafe-actions';
 import { rootReducer } from '../reducers/Index';
 
 // Actions
-import { FlowAction } from '../reducers/FlowReducer'
+import { FlowAction } from '../reducers/FlowActionReducer'
 
 // Root state of the app
 export type RootState = StateType<typeof rootReducer>;

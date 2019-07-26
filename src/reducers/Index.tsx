@@ -1,7 +1,9 @@
 import { combineReducers } from 'redux';
 
-import { flowActionReducer } from './FlowReducer';
+import { FlowActionReducer } from './FlowActionReducer';
+import { PreviewActionReducer } from './PreviewActionReducer';
 
 export const rootReducer = combineReducers({
-  flow: flowActionReducer,
+  flow: FlowActionReducer,
+  preview: PreviewActionReducer,
 });

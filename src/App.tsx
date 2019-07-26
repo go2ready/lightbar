@@ -6,6 +6,8 @@ import Paper from '@material-ui/core/Paper';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { withStyles, WithStyles, createStyles  } from '@material-ui/core/styles';
 
+import { CustomFlowContainer } from './components/Flow/containers/CustomFlowContainer'
+
 const styles = (theme: Theme) => createStyles({
   root: {
     ...theme.mixins.gutters(),
@@ -35,6 +37,7 @@ export const App = withStyles(styles)(
           {
             <div>
               <Paper className={classes.root} elevation={1}>
+                <CustomFlowContainer />
               </Paper> 
             </div>
           }
