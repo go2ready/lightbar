@@ -1,3 +1,10 @@
+export enum LightBarStyle {
+  Sixty = 60,
+  Ninety = 90,
+  OneTwety = 120,
+}
+
 export interface IFlowState {
-  flowStage: number
+  flowStage: number,
+  lightBarStyle: LightBarStyle,
 }

@@ -4,18 +4,20 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import { PreviewAction } from '../../../reducers/PreviewActionReducer';
-import { setDiodeSequence } from '../../../actions/PreviewAction';
+import { setCurrSelection } from '../../../actions/PreviewAction';
 
 export function mapStateToProps(state: RootState) {
-  const { preview: { diodeSequence }} = state;
+  const { preview: { diodeSequence}, flow: { lightBarStyle }} = state;
     return {
       diodeSequence,
+      lightBarStyle,
     }
   }
 
 export function mapDispatchToProps(dispatch: Dispatch<PreviewAction>) {
   return {
+    setCurrSelection: (currSelection: number) => dispatch(setCurrSelection(currSelection)),
   }
 }
 
-export const CanvasManagerContainer = connect(mapStateToProps, mapDispatchToProps)(Diode);
+export const DiodeContainer = connect(mapStateToProps, mapDispatchToProps)(Diode);

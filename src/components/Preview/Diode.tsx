@@ -3,29 +3,93 @@ import * as React from 'react';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { withStyles, WithStyles, createStyles  } from '@material-ui/core/styles';
 
+import { DiodeColourHelper } from './helpers/DiodeColourHelper';
+import { ColorMath } from '../../helpers/ColorMath';
+import { LightBarStyle } from '../../types/FlowState';
+import { PanelStyleHelper } from './helpers/PanelStyleHelper';
+
+import Typography from '@material-ui/core/Typography';
+
 const styles = (theme: Theme) => createStyles({
   root: {
-    flexGrow: 1,
   },
+  diode: {
+    float: "left",
+    zIndex: 15,
+  },
+  svg: {
+    position: 'relative',
+    width: '100%',
+    height: '100%',
+    cursor: 'crosshair',
+  },
+  text: {
+    cursor: 'crosshair',
+    position: 'absolute',
+    zIndex: 20,
+  }
 });
 
 export interface IDiodeProps extends WithStyles<typeof styles> {
   index: number;
-  assignments?: string[];
+  diodeSequence?: string[];
+  lightBarStyle?: LightBarStyle;
+
+  setCurrSelection?: (currSelection: number) => void;
 }
 
 export const Diode = withStyles(styles)(
   class extends React.Component<IDiodeProps>{
+    constructor(props : IDiodeProps) {
+      super(props);
+
+      this.onClick = this.onClick.bind(this);
+    }
+
     public render() : JSX.Element {
-      const { classes } = this.props;
+      const { classes, lightBarStyle } = this.props;
+
+      var self = this;
+
+      var name = this.GetDiodeName();
+      var color = DiodeColourHelper.GetDiodeColorHexByName(name);
+      var contrastColor = ColorMath.GetContrastColorHex(color);
+      var textStyle = Object.assign({}, PanelStyleHelper.GetDiodeCellTextStyle(lightBarStyle), {'color': contrastColor});
 
       return (
-        <div>
-          <svg height="100" width="100">
-            <circle cx="50" cy="50" r="40" fill="red" />
+        <div className={classes.diode} onClick={() => self.onClick()}>
+          <Typography variant="body1" paragraph className={classes.text} style={textStyle}>
+            {name}
+          </Typography>
+          <svg className={classes.svg} viewBox="0 0 30 30">
+            <circle cx="15" cy="15" r="15" fill={color} />
           </svg>
         </div>
       );
+    }
+
+    private onClick() {
+      if (typeof this.props.setCurrSelection === 'function')
+      {
+        this.props.setCurrSelection(this.props.index);
+      } else {
+        console.error('setCurrSelection function not available');
+      }
+    }
+
+    private GetDiodeName(): string
+    {
+      var assignment = this.props.diodeSequence;
+      if (assignment)
+      {
+        var index = this.props.index;
+        if (index < assignment.length)
+        {
+          return assignment[this.props.index];
+        }
+      }
+
+      return 'N/A';
     }
   }
 )

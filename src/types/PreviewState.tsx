@@ -1,3 +1,4 @@
 export interface IPreviewState {
-  diodeSequence?: number[];
+  diodeSequence?: string[];
+  currSelection?: number;
 }

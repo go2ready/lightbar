@@ -3,6 +3,8 @@ import * as React from 'react';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { withStyles, WithStyles, createStyles  } from '@material-ui/core/styles';
 
+import { SizeStepContainer } from '../Flow/steps/containers/SizeStepContainer';
+
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
@@ -80,6 +82,12 @@ export const CustomFlow = withStyles(styles)(
 
       var steps = this.getSteps();
 
+      var stepContent = <div />;
+      if (activeStep === 0)
+      {
+        stepContent = <SizeStepContainer />;
+      }
+
       return (
         <div className={classes.root}>
           <Stepper className={classes.stepper} activeStep={activeStep}>
@@ -94,7 +102,9 @@ export const CustomFlow = withStyles(styles)(
             })}
           </Stepper>
           <div>
-            {activeStep === steps.length ? (
+            {stepContent}
+            { 
+              activeStep === steps.length ? (
               <div>
                 <Typography className={classes.instructions}>
                   All steps completed - you&apos;re finished

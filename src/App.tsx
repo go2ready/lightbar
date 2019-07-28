@@ -7,11 +7,13 @@ import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { withStyles, WithStyles, createStyles  } from '@material-ui/core/styles';
 
 import { CustomFlowContainer } from './components/Flow/containers/CustomFlowContainer'
+import { PreviewPanelContainer } from './components/Preview/containers/PreviewPanelContainer'
 
 const styles = (theme: Theme) => createStyles({
   root: {
     ...theme.mixins.gutters(),
     textAlign: 'center',
+    height: '100%',
   },
   centerRoot: {
     ...theme.mixins.gutters(),
@@ -35,11 +37,12 @@ export const App = withStyles(styles)(
         <React.Fragment>
           <CssBaseline />
           {
-            <div>
-              <Paper className={classes.root} elevation={1}>
+            <Paper className={classes.root} elevation={1}>
+              <div>
+                <PreviewPanelContainer />
                 <CustomFlowContainer />
-              </Paper> 
-            </div>
+              </div>
+            </Paper> 
           }
         </React.Fragment>
       );
