@@ -7,7 +7,7 @@ import { PreviewAction } from '../../../reducers/PreviewActionReducer';
 import { setCurrSelection } from '../../../actions/PreviewAction';
 
 export function mapStateToProps(state: RootState) {
-  const { preview: { diodeSequence}, flow: { lightBarStyle }} = state;
+  const { preview: { diodeSequence }, flow: { lightBarStyle }} = state;
     return {
       diodeSequence,
       lightBarStyle,

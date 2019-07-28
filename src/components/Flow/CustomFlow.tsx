@@ -4,6 +4,7 @@ import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { withStyles, WithStyles, createStyles  } from '@material-ui/core/styles';
 
 import { SizeStepContainer } from '../Flow/steps/containers/SizeStepContainer';
+import { SpectrumStepPanelContainer } from '../Flow/steps/containers/SpectrumStepPanelContainer';
 
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -86,6 +87,9 @@ export const CustomFlow = withStyles(styles)(
       if (activeStep === 0)
       {
         stepContent = <SizeStepContainer />;
+      } else if (activeStep === 1)
+      {
+        stepContent = <SpectrumStepPanelContainer />
       }
 
       return (

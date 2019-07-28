@@ -80,7 +80,6 @@ export const PreviewPanel = withStyles(styles)(
 
       var diodeContainerStyle = PanelStyleHelper.GetDiodeContainerStyle(this.props.lightBarStyle);
       var diodeTextContainerStyle = PanelStyleHelper.GetDiodeTextContainerStyle(this.props.lightBarStyle);
-      console.log(diodeTextContainerStyle);
       return (
         <div className={classes.root} style={panelStyle}>
           <div className={classes.panel}>

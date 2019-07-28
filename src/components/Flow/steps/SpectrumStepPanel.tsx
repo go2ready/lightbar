@@ -5,6 +5,9 @@ import { withStyles, WithStyles, createStyles  } from '@material-ui/core/styles'
 
 import { LightBarStyle } from '../../../types/FlowState';
 
+import { SpectrumScrollerContainer } from './SpectrumStep/containers/SpectrumScrollerContainer';
+import { DiodePickerContainer } from './SpectrumStep/containers/DiodePickerContainer';
+
 const styles = (theme: Theme) => createStyles({
   root: {
   },
@@ -31,7 +34,8 @@ export const SpectrumStepPanel = withStyles(styles)(
 
       return (
         <div className={classes.root}>
-
+          <SpectrumScrollerContainer />
+          <DiodePickerContainer />
         </div>
       );
     }

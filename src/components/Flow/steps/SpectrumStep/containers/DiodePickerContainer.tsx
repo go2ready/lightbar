@@ -1,10 +1,10 @@
-import { SpectrumScroller } from '../SpectrumScroller';
+import { DiodePicker } from '../DiodePicker';
 import { RootState } from '../../../../../types/Index';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import { RootAction } from '../../../../../types/Index';
-import { setCurrSelection } from '../../../../../actions/PreviewAction';
+import { setDiodeSequence } from '../../../../../actions/PreviewAction';
 
 export function mapStateToProps(state: RootState) {
     const { preview: { diodeSequence, currSelection } } = state;
@@ -16,8 +16,8 @@ export function mapStateToProps(state: RootState) {
 
 export function mapDispatchToProps(dispatch: Dispatch<RootAction>) {
   return {
-    setCurrSelection: (currSelection: number) => dispatch(setCurrSelection(currSelection)),
+    setDiodeSequence: (diodeSequence: string[]) => dispatch(setDiodeSequence(diodeSequence)),
   }
 }
 
-export const SpectrumScrollerContainer = connect(mapStateToProps, mapDispatchToProps)(SpectrumScroller);
+export const DiodePickerContainer = connect(mapStateToProps, mapDispatchToProps)(DiodePicker);

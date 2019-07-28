@@ -59,7 +59,7 @@ export const Diode = withStyles(styles)(
       return (
         <div className={classes.diode} onClick={() => self.onClick()}>
           <Typography variant="body1" paragraph className={classes.text} style={textStyle}>
-            {name}
+            <b>{name}</b>
           </Typography>
           <svg className={classes.svg} viewBox="0 0 30 30">
             <circle cx="15" cy="15" r="15" fill={color} />

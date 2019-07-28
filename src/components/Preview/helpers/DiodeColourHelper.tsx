@@ -1,7 +1,7 @@
 // fill="#044B94" fill-opacity="0.4"
 
 export class DiodeColourHelper {
-  private static DiodeMap: Map<string, string> = new Map([
+  public static DiodeMap: Map<string, string> = new Map([
     ['380', '#F07FFF'],
     ['410', '#EB56FF'],
     ['420', '#E535FC'],
@@ -15,8 +15,8 @@ export class DiodeColourHelper {
     ['500', '#05FFFA'],
     ['590', '#FF8205'],
     ['740', '#FF4747'],
-    ['20000K', '#FBFF1E'],
-    ['5000K', '#FFB01E'],
+    ['20kK', '#FBFF1E'],
+    ['5kK', '#FFB01E'],
   ]);
 
   public static GetDiodeColorHexByName(name: string) : string {
