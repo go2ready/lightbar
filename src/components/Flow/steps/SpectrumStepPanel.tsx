@@ -8,8 +8,20 @@ import { LightBarStyle } from '../../../types/FlowState';
 import { SpectrumScrollerContainer } from './SpectrumStep/containers/SpectrumScrollerContainer';
 import { DiodePickerContainer } from './SpectrumStep/containers/DiodePickerContainer';
 
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
+import Paper from '@material-ui/core/Paper';
+
 const styles = (theme: Theme) => createStyles({
   root: {
+  },
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+    fontWeight: theme.typography.fontWeightRegular,
   },
 });
 
@@ -34,8 +46,21 @@ export const SpectrumStepPanel = withStyles(styles)(
 
       return (
         <div className={classes.root}>
-          <SpectrumScrollerContainer />
-          <DiodePickerContainer />
+          <ExpansionPanel disabled={false}>
+            <ExpansionPanelSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography className={classes.heading}>Customise Your Own Spectrum</Typography>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              <Paper style={{width: '100%'}}>
+                <SpectrumScrollerContainer />
+                <DiodePickerContainer />
+              </Paper>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
         </div>
       );
     }
