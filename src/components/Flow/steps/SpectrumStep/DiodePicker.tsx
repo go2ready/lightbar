@@ -7,8 +7,6 @@ import { DiodeColourHelper } from '../../../Preview/helpers/DiodeColourHelper';
 
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
-import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
-import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
@@ -41,7 +39,7 @@ export const DiodePicker = withStyles(styles)(
 
       var self = this;
 
-      var selection = 'Unset';
+      var selection = 'N/A';
       if (diodeSequence !== undefined && currSelection !== undefined)
       {
         selection = diodeSequence[currSelection];

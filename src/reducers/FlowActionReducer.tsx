@@ -9,7 +9,10 @@ export function FlowActionReducer(state: IFlowState | undefined, action: FlowAct
   {
     state = {
       flowStage: 1,
-      lightBarStyle: LightBarStyle.Sixty
+      lightBarStyle: LightBarStyle.Sixty,
+      isCustomising: false,
+      shouldResetSpectrum: false,
+      shouldExpandDiodePicker: false,
     }
   }
 
@@ -21,6 +24,18 @@ export function FlowActionReducer(state: IFlowState | undefined, action: FlowAct
     case getType(flowAction.setLightBarStyle):
       return { ...state,
         lightBarStyle: action.payload.lightBarStyle,
+      };
+    case getType(flowAction.setIsCustomising):
+      return { ...state,
+        isCustomising: action.payload.isCustomising,
+      };
+    case getType(flowAction.setShouldResetSpectrum):
+      return { ...state,
+        shouldResetSpectrum: action.payload.shouldResetSpectrum,
+      };
+    case getType(flowAction.setShouldExpandDiodePicker):
+      return { ...state,
+        shouldExpandDiodePicker: action.payload.shouldExpandDiodePicker,
       };
     default:
       return state;

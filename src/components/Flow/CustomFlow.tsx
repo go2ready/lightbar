@@ -119,7 +119,6 @@ export const CustomFlow = withStyles(styles)(
               </div>
             ) : (
               <div>
-                <Typography className={classes.instructions}>{self.getStepContent(activeStep)}</Typography>
                 <div>
                   <Button disabled={activeStep === 0} onClick={() => self.handleBack()} className={classes.button}>
                     Back

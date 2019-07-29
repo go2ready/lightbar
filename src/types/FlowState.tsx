@@ -7,4 +7,7 @@ export enum LightBarStyle {
 export interface IFlowState {
   flowStage: number,
   lightBarStyle: LightBarStyle,
+  isCustomising: boolean,
+  shouldResetSpectrum: boolean,
+  shouldExpandDiodePicker: boolean,
 }
