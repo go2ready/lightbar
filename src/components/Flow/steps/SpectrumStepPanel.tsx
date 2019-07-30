@@ -9,6 +9,7 @@ import { SpectrumScrollerContainer } from './SpectrumStep/containers/SpectrumScr
 import { DiodePickerContainer } from './SpectrumStep/containers/DiodePickerContainer';
 import { PresetPickerContainer } from './SpectrumStep/containers/PresetPickerContainer';
 import { CustomAckContainer } from './SpectrumStep/containers/CustomAckContainer';
+import { SpectrumGraphContainer } from '../../Charting/containers/SpectrumGraphContainer';
 
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -61,6 +62,7 @@ export const SpectrumStepPanel = withStyles(styles)(
       return (
         <div className={classes.root}>
           <PresetPickerContainer />
+          <SpectrumGraphContainer />
           <CustomAckContainer />
           <ExpansionPanel disabled={!this.props.isCustomising} expanded={this.state.customExpaned && this.props.isCustomising} onChange={this.onExpandToggle}>
             <ExpansionPanelSummary

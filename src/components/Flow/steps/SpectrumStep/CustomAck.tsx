@@ -13,8 +13,14 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
+import IconButton from '@material-ui/core/IconButton';
+import HelpIcon from '@material-ui/icons/Help';
+
 const styles = (theme: Theme) => createStyles({
   root: {
+  },
+  button: {
+    marginLeft: -10
   },
 });
 
@@ -68,8 +74,11 @@ export const CustomAck = withStyles(styles)(
                   color="primary"
                 />
               }
-              label="I want to customise the spectrum and I understand that additional tax might occur"
+              label="I want to customise the spectrum and I understand that additional fee might occur"
             />
+            <IconButton color="primary" className={classes.button} aria-label="help with tax" onClick={this.OnHelpClicked}>
+              <HelpIcon />
+            </IconButton>
           </FormGroup>
           <Dialog
             open={confirmOpen}
@@ -92,22 +101,25 @@ export const CustomAck = withStyles(styles)(
             </DialogActions>
           </Dialog>
           <Dialog
-            open={}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
+            open={helpOpen}
+            onClose={this.OnHelpDismissed}
+            aria-labelledby="help-alert-dialog-title"
+            aria-describedby="help-alert-dialog-description"
           >
-            <DialogTitle id="alert-dialog-title">{"Are you sure?"}</DialogTitle>
+            <DialogTitle id="help-alert-dialog-title">{"Shipping from outside the country"}</DialogTitle>
             <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                Leaving customisation mode will reset your spectrum.
+              <DialogContentText id="help-alert-dialog-description">
+                Your light with custom designed spectrum will be specially made for you in our factory, 
+                brefore deliverying to you via express shipping directly to your door 
+                FREE of charge (if you live in remote areas that UPS/USPS/DHL/FEDEX/DPD doesn't cover, please contact us first).
+                {<br/>}{<br/>}
+                However there might be custom duty or import tax which we will not be responsible for, should such charge occurs, they 
+                are normally collected by the shipping company or when you pick it up, please do not confuse them for additional shipping charge.
               </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button onClick={this.HandleConfirmedDecline} color="secondary">
-                No
-              </Button>
-              <Button onClick={this.HandleConfirmAccept} color="primary" autoFocus>
-                Yes
+              <Button onClick={this.OnHelpDismissed} color="secondary">
+                Okay
               </Button>
             </DialogActions>
           </Dialog>
