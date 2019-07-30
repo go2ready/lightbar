@@ -4,7 +4,6 @@ import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { withStyles, WithStyles, createStyles  } from '@material-ui/core/styles';
 
 import ScrollMenu from 'react-horizontal-scrolling-menu';
-import { any } from 'prop-types';
 
 // One item component
 // selected prop will be passed
@@ -64,7 +63,6 @@ export const SpectrumScroller = withStyles(styles)(
         selection = this.props.currSelection;
       }
 
-      var self = this;
       var list = this.GetList();
       var selected = list[selection]['name'];
       var menu = Menu(list, selected);

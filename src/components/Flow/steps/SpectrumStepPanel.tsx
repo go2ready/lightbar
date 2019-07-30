@@ -16,8 +16,6 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import Paper from '@material-ui/core/Paper';
-
 const styles = (theme: Theme) => createStyles({
   root: {
   },

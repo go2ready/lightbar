@@ -27,7 +27,8 @@ export interface ICustomAckProps extends WithStyles<typeof styles> {
 }
 
 export interface ICustomAckState {
-  open: boolean;
+  confirmOpen: boolean;
+  helpOpen: boolean;
 }
 
 export const CustomAck = withStyles(styles)(
@@ -37,17 +38,21 @@ export const CustomAck = withStyles(styles)(
       super(props);
 
       this.state = {
-        open: false
+        confirmOpen: false,
+        helpOpen: false,
       }
 
-      this.HandleChange = this.HandleChange.bind(this);
-      this.HandleAccept = this.HandleAccept.bind(this);
-      this.HandleDecline = this.HandleDecline.bind(this);
+      this.HandleCheckChange = this.HandleCheckChange.bind(this);
+      this.HandleConfirmAccept = this.HandleConfirmAccept.bind(this);
+      this.HandleConfirmedDecline = this.HandleConfirmedDecline.bind(this);
+
+      this.OnHelpClicked = this.OnHelpClicked.bind(this);
+      this.OnHelpDismissed = this.OnHelpDismissed.bind(this);
     }
 
     public render() : JSX.Element {
       const { classes, isCustomising } = this.props;
-      const { open } = this.state;
+      const { confirmOpen, helpOpen } = this.state;
 
       var self = this;
 
@@ -58,7 +63,7 @@ export const CustomAck = withStyles(styles)(
               control={
                 <Checkbox
                   checked={isCustomising}
-                  onChange={self.HandleChange}
+                  onChange={self.HandleCheckChange}
                   value="isCustomising"
                   color="primary"
                 />
@@ -67,7 +72,7 @@ export const CustomAck = withStyles(styles)(
             />
           </FormGroup>
           <Dialog
-            open={open}
+            open={confirmOpen}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
           >
@@ -78,10 +83,30 @@ export const CustomAck = withStyles(styles)(
               </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button onClick={this.HandleDecline} color="secondary">
+              <Button onClick={this.HandleConfirmedDecline} color="secondary">
                 No
               </Button>
-              <Button onClick={this.HandleAccept} color="primary" autoFocus>
+              <Button onClick={this.HandleConfirmAccept} color="primary" autoFocus>
+                Yes
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Dialog
+            open={}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">{"Are you sure?"}</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Leaving customisation mode will reset your spectrum.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={this.HandleConfirmedDecline} color="secondary">
+                No
+              </Button>
+              <Button onClick={this.HandleConfirmAccept} color="primary" autoFocus>
                 Yes
               </Button>
             </DialogActions>
@@ -90,15 +115,31 @@ export const CustomAck = withStyles(styles)(
       );
     }
 
-    private HandleDecline()
+    private OnHelpClicked()
     {
       this.setState({
         ...this.state,
-        open: false,
+        helpOpen: true,
       });
     }
 
-    private HandleAccept()
+    private OnHelpDismissed()
+    {
+      this.setState({
+        ...this.state,
+        helpOpen: false,
+      });
+    }
+
+    private HandleConfirmedDecline()
+    {
+      this.setState({
+        ...this.state,
+        confirmOpen: false,
+      });
+    }
+
+    private HandleConfirmAccept()
     {
       if (typeof this.props.setIsCustomising === 'function')
       {
@@ -115,17 +156,17 @@ export const CustomAck = withStyles(styles)(
         console.error('setDiodeSequence function not available');
       }
       
-      this.HandleDecline();
+      this.HandleConfirmedDecline();
     }
 
-    private HandleChange(event:React.ChangeEvent<HTMLInputElement>)
+    private HandleCheckChange(event:React.ChangeEvent<HTMLInputElement>)
     {
       var isChecked = event.target.checked;
       if (this.props.isCustomising && !isChecked)
       {
         this.setState({
           ...this.state,
-          open: true
+          confirmOpen: true
         });
         return;
       }

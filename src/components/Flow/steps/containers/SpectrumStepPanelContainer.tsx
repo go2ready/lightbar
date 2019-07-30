@@ -6,7 +6,6 @@ import { Dispatch } from 'redux';
 import { RootAction } from '../../../../types/Index';
 import { setShouldExpandDiodePicker } from '../../../../actions/FlowAction';
 import { setDiodeSequence } from '../../../../actions/PreviewAction';
-import { LightBarStyle } from '../../../../types/FlowState';
 
 export function mapStateToProps(state: RootState) {
     const { flow: { lightBarStyle, isCustomising, shouldExpandDiodePicker }, preview: { diodeSequence } } = state;

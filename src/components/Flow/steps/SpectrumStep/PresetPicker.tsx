@@ -121,7 +121,7 @@ export const PresetPicker = withStyles(styles)(
       var rightMap = this.GetSpectrumMap();
 
       var options : JSX.Element[] = [];
-      options.push(<option key={'option' + 'None'} value={'None'}>{'None'}</option>);
+      options.push(<option key={'optionNone'} value={'None'}>{'None'}</option>);
       rightMap.forEach((value: string[], key: string) => {
         options.push(<option key={'option' + key} value={key}>{key}</option>);
       });
