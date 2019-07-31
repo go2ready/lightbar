@@ -15,6 +15,7 @@ const styles = (theme: Theme) => createStyles({
 });
 
 export interface ISpectrumGraphProps extends WithStyles<typeof styles> {
+  diodeSequence?: string[];
 }
 
 export interface ISpectrumGraphState {
@@ -36,9 +37,9 @@ export const SpectrumGraph = withStyles(styles)(
       }
 
       var myChart = new Chart(ctx, {
-          type: 'bar',
+          type: 'line',
           data: {
-              labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+              labels: this.generateLabels(),
               datasets: [{
                   label: '# of Votes',
                   data: [12, 19, 3, 5, 2, 3],
@@ -81,6 +82,30 @@ export const SpectrumGraph = withStyles(styles)(
           <canvas id="spectrumChart" width="400" height="400"></canvas>
         </div> 
       );
+    }
+
+    private generateLabels() {
+      var labels = [];
+
+      var counter = 0;
+      for (var _i = 380; _i < 800; _i += 10) {
+        if (counter === 0)
+        {
+          labels.push(String(_i));
+        }
+        else
+        {
+          labels.push("");
+        }
+
+        counter++;
+        if (counter >= 4)
+        {
+          counter = 0;
+        }
+      }
+      
+      return labels;
     }
   }
 )

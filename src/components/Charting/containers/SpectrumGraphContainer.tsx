@@ -6,7 +6,9 @@ import { Dispatch } from 'redux';
 import { RootAction } from '../../../types/Index';
 
 export function mapStateToProps(state: RootState) {
+    const { preview: { diodeSequence } } = state;
     return {
+      diodeSequence
     }
   }
 
