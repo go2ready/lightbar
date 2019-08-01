@@ -3,6 +3,8 @@ import * as React from 'react';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { withStyles, WithStyles, createStyles  } from '@material-ui/core/styles';
 
+import { LightBarStyle } from '../../types/FlowState';
+
 import { Chart } from 'chart.js';
 
 const styles = (theme: Theme) => createStyles({
@@ -16,6 +18,7 @@ const styles = (theme: Theme) => createStyles({
 
 export interface ISpectrumGraphProps extends WithStyles<typeof styles> {
   diodeSequence?: string[];
+  lightBarStyle?: LightBarStyle;
 }
 
 export interface ISpectrumGraphState {
@@ -23,9 +26,20 @@ export interface ISpectrumGraphState {
 
 export const SpectrumGraph = withStyles(styles)(
   class extends React.Component<ISpectrumGraphProps, ISpectrumGraphState>{
+    private spectrumData: number[];
 
     constructor(props : ISpectrumGraphProps) {
       super(props);
+
+      if (props.lightBarStyle)
+      {
+
+      }
+      var counter = 18;
+      switch(props.lightBarStyle)
+      {
+
+      }
     }
 
     public componentDidMount()

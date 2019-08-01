@@ -37,7 +37,7 @@ export class DiodeToSpectrumHelper {
     return values;
   }
 
-  public spectrum8kK: number[] = [
+  public static spectrum8kK: number[] = [
     //380
     0.0,
     //390
@@ -124,7 +124,7 @@ export class DiodeToSpectrumHelper {
     0.0,
   ];
 
-  public spectrum20kK: number[] = [
+  public static spectrum20kK: number[] = [
     //380
     0.0,
     //390
@@ -211,6 +211,9 @@ export class DiodeToSpectrumHelper {
     0.0,
   ];
 
-  public DiodeToSpectrum: Map<string, Map<string, number>> 
-    = new Map<string, Map<string, number>>();
+  public static SpecialDiodeToSpectrum: Map<string, number[]> 
+    = new Map([
+      ['8kK', DiodeToSpectrumHelper.spectrum8kK],
+      ['20kK', DiodeToSpectrumHelper.spectrum20kK],
+    ]);
 }
