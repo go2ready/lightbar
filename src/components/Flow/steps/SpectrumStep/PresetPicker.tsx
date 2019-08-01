@@ -60,7 +60,7 @@ export const PresetPicker = withStyles(styles)(
         <div>
           <FormControl className={classes.formControl}>
             <InputLabel shrink htmlFor="preset-native-label-placeholder">
-              Preset
+              Preset spectrum
             </InputLabel>
             <NativeSelect
               value={this.state.selected}
@@ -69,7 +69,11 @@ export const PresetPicker = withStyles(styles)(
             >
               {this.GetPresetOptions()}
             </NativeSelect>
-            <FormHelperText>Choose from our professionally selected spectrum</FormHelperText>
+            <FormHelperText>
+              * It is not possible to mathmatically deduct real <br/>
+              spectrum with 100% accuracy, the one that is      <br/>
+              showing is for reference only. 
+            </FormHelperText>
           </FormControl>
           <Button onClick={this.onClick} variant="outlined" color="primary" className={classes.button}>
             Apply

@@ -4,15 +4,22 @@ import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { withStyles, WithStyles, createStyles  } from '@material-ui/core/styles';
 
 import { LightBarStyle } from '../../types/FlowState';
+import { DiodeToSpectrumHelper } from './helpers/DiodeToSpectrumHelper';
 
 import { Chart } from 'chart.js';
 
 const styles = (theme: Theme) => createStyles({
   root: {
   },
+  chart: {
+    width: '100%',
+    maxWidth: 400,
+    maxHeight: 200,
+  },
   chartContainer: {
-    width: 400,
-    height: 400,
+    width: '100%',
+    maxWidth: 400,
+    maxHeight: 200,
   },
 });
 
@@ -26,19 +33,26 @@ export interface ISpectrumGraphState {
 
 export const SpectrumGraph = withStyles(styles)(
   class extends React.Component<ISpectrumGraphProps, ISpectrumGraphState>{
-    private spectrumData: number[];
+    private spectrumData: number[] = [];
+    private chart: Chart = new Chart('spectrumChart', {});
 
     constructor(props : ISpectrumGraphProps) {
       super(props);
 
-      if (props.lightBarStyle)
-      {
+      this.resetSpectrumMap();
+    }
 
-      }
-      var counter = 18;
-      switch(props.lightBarStyle)
-      {
+    public componentDidUpdate()
+    {
+      this.updateSpectrumMap();
 
+      console.log(this.spectrumData);
+      if (this.chart.data.datasets)
+      {
+        this.chart.data.datasets.forEach((dataset) => {
+          dataset.data = this.spectrumData;
+        });
+        this.chart.update();
       }
     }
 
@@ -49,41 +63,74 @@ export const SpectrumGraph = withStyles(styles)(
       {
         return;
       }
+      
+      var tdctx = ctx.getContext("2d");
+      if (!tdctx)
+      {
+        return;
+      }
 
-      var myChart = new Chart(ctx, {
+      var gradientStroke = tdctx.createLinearGradient(0, 0, 400, 0);
+      gradientStroke.addColorStop(0, "rgb(75, 58, 157)"); // purple
+      gradientStroke.addColorStop(0.05, "rgb(81, 82, 166)"); // bp
+      gradientStroke.addColorStop(0.28, "rgb(45, 140, 174)"); // blue
+      gradientStroke.addColorStop(0.4, "rgb(83, 193, 54)"); // green
+      gradientStroke.addColorStop(0.5, "rgb(237, 235, 88)"); // yellow
+      gradientStroke.addColorStop(0.7, "rgb(240, 119, 64)"); // orange
+      gradientStroke.addColorStop(1, "rgb(202, 42, 38)");// red
+
+      var gradientFill = tdctx.createLinearGradient(0, 0, 400, 0);
+      gradientFill.addColorStop(0, "rgb(75, 58, 157)");
+      gradientFill.addColorStop(0.05, "rgb(81, 82, 166)"); // bp
+      gradientFill.addColorStop(0.28, "rgb(45, 140, 174)");
+      gradientFill.addColorStop(0.4, "rgb(83, 193, 54)");
+      gradientFill.addColorStop(0.5, "rgb(237, 235, 88)");
+      gradientFill.addColorStop(0.7, "rgb(240, 119, 64)");
+      gradientFill.addColorStop(1, "rgb(202, 42, 38)");
+
+      this.chart = new Chart(ctx, {
           type: 'line',
           data: {
               labels: this.generateLabels(),
               datasets: [{
-                  label: '# of Votes',
-                  data: [12, 19, 3, 5, 2, 3],
-                  backgroundColor: [
-                      'rgba(255, 99, 132, 0.2)',
-                      'rgba(54, 162, 235, 0.2)',
-                      'rgba(255, 206, 86, 0.2)',
-                      'rgba(75, 192, 192, 0.2)',
-                      'rgba(153, 102, 255, 0.2)',
-                      'rgba(255, 159, 64, 0.2)'
-                  ],
-                  borderColor: [
-                      'rgba(255, 99, 132, 1)',
-                      'rgba(54, 162, 235, 1)',
-                      'rgba(255, 206, 86, 1)',
-                      'rgba(75, 192, 192, 1)',
-                      'rgba(153, 102, 255, 1)',
-                      'rgba(255, 159, 64, 1)'
-                  ],
-                  borderWidth: 1
+                  //label: '*Spectrum',
+                  data: this.spectrumData,
+                  borderColor:               gradientStroke,
+                  pointBorderColor:          gradientStroke,
+                  pointBackgroundColor:      gradientStroke,
+                  pointHoverBackgroundColor: gradientStroke,
+                  pointHoverBorderColor:     gradientStroke,
+                  borderWidth: 1,
+                  fill: true,
+                  backgroundColor: gradientFill,
               }]
           },
           options: {
-              scales: {
-                  yAxes: [{
-                      ticks: {
-                          beginAtZero: true
-                      }
-                  }]
-              }
+            title: {
+              display: true,
+              text: '* Spectrum',
+            },
+            elements: { point: { radius: 0 } },
+            legend: {
+              display: false
+            },
+            scales: {
+              xAxes: [{
+                gridLines: {
+                  display:false
+                }
+              }],
+              yAxes: [{
+                ticks: {
+                  beginAtZero: true,
+                  display: false
+                },
+                gridLines: {
+                  display:false,
+                  drawBorder: false,
+                }
+              }]
+            }
           }
       });
     }
@@ -93,7 +140,7 @@ export const SpectrumGraph = withStyles(styles)(
 
       return (
         <div className={classes.chartContainer}>
-          <canvas id="spectrumChart" width="400" height="400"></canvas>
+          <canvas id="spectrumChart" className={classes.chart}></canvas>
         </div> 
       );
     }
@@ -113,13 +160,52 @@ export const SpectrumGraph = withStyles(styles)(
         }
 
         counter++;
-        if (counter >= 4)
+        if (counter >= 2)
         {
           counter = 0;
         }
       }
       
       return labels;
+    }
+
+    private resetSpectrumMap() {
+      this.spectrumData = [];
+      for (var c = 0; c < 42; c++) {
+        this.spectrumData.push(0);
+      }
+    }
+
+    private updateSpectrumMap()
+    {
+      var diodeSeq = this.props.diodeSequence;
+      
+      if (diodeSeq)
+      {
+        this.resetSpectrumMap();
+
+        diodeSeq.forEach(diode => {
+          if (diode !== 'N/A')
+          {
+            var intensityArray : number[] = [];
+            if (DiodeToSpectrumHelper.SpecialDiodeToSpectrum.has(diode))
+            {
+              var ia = DiodeToSpectrumHelper.SpecialDiodeToSpectrum.get(diode);
+              if (ia)
+              {
+                intensityArray = ia;
+              }
+            }
+            else
+            {
+              intensityArray = DiodeToSpectrumHelper.GetNarrowDiodeMap(diode);
+            }
+
+            console.log(intensityArray);
+            this.spectrumData = this.spectrumData.map((a, i) => a + intensityArray[i]);
+          }
+        });
+      }
     }
   }
 )

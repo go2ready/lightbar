@@ -17,19 +17,22 @@ export class DiodeToSpectrumHelper {
       switch(_i)
       {
         case low2:
-          values.push(0.1);
+          values.push(0.2);
           break;
         case low1:
-          values.push(0.3);
+          values.push(0.6);
           break;
         case wlnumber:
           values.push(1);
           break;
         case high1:
-          values.push(0.3);
+          values.push(0.6);
           break;
         case high2:
-          values.push(0.1);
+          values.push(0.2);
+          break;
+        default:
+          values.push(0);
           break;
       }
     }
@@ -51,9 +54,9 @@ export class DiodeToSpectrumHelper {
     //430
     0.1,
     //440
-    0.8,
+    0.7,
     //450
-    0.8,
+    0.68,
     //460
     0.6,
     //470
@@ -126,21 +129,21 @@ export class DiodeToSpectrumHelper {
 
   public static spectrum20kK: number[] = [
     //380
-    0.0,
-    //390
-    0.0,
-    //400
     0.01,
-    //410
-    0.03,
-    //420
-    0.1,
-    //430
+    //390
+    0.08,
+    //400
     0.15,
+    //410
+    0.18,
+    //420
+    0.21,
+    //430
+    0.25,
     //440
-    0.6,
+    0.5,
     //450
-    1.2,
+    0.7,
     //460
     0.6,
     //470

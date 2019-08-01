@@ -16,6 +16,9 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Divider from '@material-ui/core/Divider';
+
+import Grid from '@material-ui/core/Grid';
 
 const styles = (theme: Theme) => createStyles({
   root: {
@@ -61,8 +64,15 @@ export const SpectrumStepPanel = withStyles(styles)(
       console.log('customising:' + this.props.isCustomising);
       return (
         <div className={classes.root}>
-          <PresetPickerContainer />
-          <SpectrumGraphContainer />
+          <Grid container spacing={3}>
+            <Grid item xs={6}>
+              <PresetPickerContainer />
+            </Grid>
+            <Grid item xs={6}>
+              <SpectrumGraphContainer />
+            </Grid>
+          </Grid>
+          <Divider variant="middle" />
           <CustomAckContainer />
           <ExpansionPanel disabled={!this.props.isCustomising} expanded={this.state.customExpaned && this.props.isCustomising} onChange={this.onExpandToggle}>
             <ExpansionPanelSummary
