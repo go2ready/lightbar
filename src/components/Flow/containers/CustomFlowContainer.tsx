@@ -7,9 +7,10 @@ import { FlowAction } from '../../../reducers/FlowActionReducer';
 import { setFlowStage } from '../../../actions/FlowAction';
 
 export function mapStateToProps(state: RootState) {
-  const { flow: { flowStage }} = state;
+  const { flow: { flowStage }, preview: { diodeSequence }} = state;
     return {
       flowStage,
+      diodeSequence,
     }
   }
 

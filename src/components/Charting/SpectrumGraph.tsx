@@ -13,13 +13,14 @@ const styles = (theme: Theme) => createStyles({
   },
   chart: {
     width: '100%',
-    maxWidth: 400,
+    minWidth: 300,
+    maxWidth: 500,
     maxHeight: 200,
   },
   chartContainer: {
     width: '100%',
     height: '100%',
-    maxWidth: 400,
+    maxWidth: 500,
     maxHeight: 200,
   },
 });

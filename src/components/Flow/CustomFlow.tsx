@@ -10,7 +10,11 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Typography from '@material-ui/core/Typography';
+
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 
 const styles = (theme: Theme) => createStyles({
   root: {
@@ -22,6 +26,7 @@ const styles = (theme: Theme) => createStyles({
   },
   button: {
     marginRight: theme.spacing(1),
+    minWidth: 150,
   },
   instructions: {
     marginTop: theme.spacing(1),
@@ -31,6 +36,7 @@ const styles = (theme: Theme) => createStyles({
 
 export interface ICustomFlowProps extends WithStyles<typeof styles> {
   flowStage?: number;
+  diodeSequence?: string[];
 
   setFlowStage?: (flowStage: number) => void;
 }
@@ -106,45 +112,17 @@ export const CustomFlow = withStyles(styles)(
             })}
           </Stepper>
           <div>
+            <ButtonGroup color="primary" fullWidth aria-label="full width outlined button group">
+              <Button disabled={activeStep === 0} onClick={() => self.handleBack()}>
+              {<NavigateBeforeIcon />} Back
+              </Button>
+              <Button
+                onClick={() => self.handleNext()}>
+                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                {<NavigateNextIcon />}
+              </Button>
+            </ButtonGroup>
             {stepContent}
-            { 
-              activeStep === steps.length ? (
-              <div>
-                <Typography className={classes.instructions}>
-                  All steps completed - you&apos;re finished
-                </Typography>
-                <Button onClick={() => this.handleReset()} className={classes.button}>
-                  Reset
-                </Button>
-              </div>
-            ) : (
-              <div>
-                <div>
-                  <Button disabled={activeStep === 0} onClick={() => self.handleBack()} className={classes.button}>
-                    Back
-                  </Button>
-                  {/* {isStepOptional(activeStep) && (
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={handleSkip}
-                      className={classes.button}
-                    >
-                      Skip
-                    </Button>
-                  )} */}
-
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => self.handleNext()}
-                    className={classes.button}
-                  >
-                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                  </Button>
-                </div>
-              </div>
-            )}
           </div>
         </div>
       );
