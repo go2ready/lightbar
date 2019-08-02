@@ -18,6 +18,7 @@ const styles = (theme: Theme) => createStyles({
   },
   chartContainer: {
     width: '100%',
+    height: '100%',
     maxWidth: 400,
     maxHeight: 200,
   },
