@@ -36,7 +36,7 @@ export interface ISpectrumGraphState {
 export const SpectrumGraph = withStyles(styles)(
   class extends React.Component<ISpectrumGraphProps, ISpectrumGraphState>{
     private spectrumData: number[] = [];
-    private chart: Chart = new Chart('spectrumChart', {});
+    private chart: Chart | undefined;
 
     constructor(props : ISpectrumGraphProps) {
       super(props);
@@ -47,9 +47,7 @@ export const SpectrumGraph = withStyles(styles)(
     public componentDidUpdate()
     {
       this.updateSpectrumMap();
-
-      console.log(this.spectrumData);
-      if (this.chart.data.datasets)
+      if (this.chart && this.chart.data.datasets)
       {
         this.chart.data.datasets.forEach((dataset) => {
           dataset.data = this.spectrumData;
@@ -95,7 +93,6 @@ export const SpectrumGraph = withStyles(styles)(
           data: {
               labels: this.generateLabels(),
               datasets: [{
-                  //label: '*Spectrum',
                   data: this.spectrumData,
                   borderColor:               gradientStroke,
                   pointBorderColor:          gradientStroke,
@@ -110,7 +107,7 @@ export const SpectrumGraph = withStyles(styles)(
           options: {
             title: {
               display: true,
-              text: '* Spectrum',
+              text: '** Spectrum',
             },
             elements: { point: { radius: 0 } },
             legend: {
@@ -203,7 +200,6 @@ export const SpectrumGraph = withStyles(styles)(
               intensityArray = DiodeToSpectrumHelper.GetNarrowDiodeMap(diode);
             }
 
-            console.log(intensityArray);
             this.spectrumData = this.spectrumData.map((a, i) => a + intensityArray[i]);
           }
         });

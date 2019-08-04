@@ -3,6 +3,8 @@ import * as React from 'react';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { withStyles, WithStyles, createStyles  } from '@material-ui/core/styles';
 
+import { scroller } from 'react-scroll';
+
 import { DiodeColourHelper } from './helpers/DiodeColourHelper';
 import { ColorMath } from '../../helpers/ColorMath';
 import { LightBarStyle } from '../../types/FlowState';
@@ -34,6 +36,7 @@ export interface IDiodeProps extends WithStyles<typeof styles> {
   index: number;
   diodeSequence?: string[];
   lightBarStyle?: LightBarStyle;
+  isCustomising?: boolean;
 
   setCurrSelection?: (currSelection: number) => void;
 }
@@ -72,6 +75,17 @@ export const Diode = withStyles(styles)(
       if (typeof this.props.setCurrSelection === 'function')
       {
         this.props.setCurrSelection(this.props.index);
+
+        if (this.props.isCustomising)
+        {
+          scroller.scrollTo('CustomLEDDesign', {
+            duration: 1500,
+            delay: 100,
+            smooth: true,
+            // containerId: 'CustomLEDDesignContainer',
+            offset: -50,
+          });
+        }      
       } else {
         console.error('setCurrSelection function not available');
       }

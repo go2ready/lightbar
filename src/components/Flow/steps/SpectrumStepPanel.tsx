@@ -4,6 +4,7 @@ import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { withStyles, WithStyles, createStyles  } from '@material-ui/core/styles';
 
 import { LightBarStyle } from '../../../types/FlowState';
+import { Element } from 'react-scroll';
 
 import { SpectrumScrollerContainer } from './SpectrumStep/containers/SpectrumScrollerContainer';
 import { DiodePickerContainer } from './SpectrumStep/containers/DiodePickerContainer';
@@ -27,6 +28,10 @@ const styles = (theme: Theme) => createStyles({
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular,
   },
+  divider: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+  }
 });
 
 export interface ISpectrumStepPanelProps extends WithStyles<typeof styles> {
@@ -56,14 +61,38 @@ export const SpectrumStepPanel = withStyles(styles)(
       this.onExpandToggle = this.onExpandToggle.bind(this);
     }
 
+    public componentDidUpdate()
+    {
+      this.onExpandRequest();
+    }
+
     public render() : JSX.Element {
       const { classes } = this.props;
-
-      this.onExpandRequest();
 
       console.log('customising:' + this.props.isCustomising);
       return (
         <div className={classes.root}>
+          <CustomAckContainer />
+          <Element name="CustomLEDDesign">
+            <ExpansionPanel disabled={!this.props.isCustomising} expanded={this.state.customExpaned && this.props.isCustomising} onChange={this.onExpandToggle}>
+              <ExpansionPanelSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography className={classes.heading}>Customise Your Own Spectrum</Typography>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                <div style={{width: '100%'}}>
+                  <SpectrumScrollerContainer />
+                  <DiodePickerContainer />
+                </div>
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
+          </Element>
+
+          <Divider variant="middle" className={classes.divider}/>
+
           <Grid container spacing={3}>
             <Grid item xs>
               <PresetPickerContainer />
@@ -72,23 +101,6 @@ export const SpectrumStepPanel = withStyles(styles)(
               <SpectrumGraphContainer />
             </Grid>
           </Grid>
-          <Divider variant="middle" />
-          <CustomAckContainer />
-          <ExpansionPanel disabled={!this.props.isCustomising} expanded={this.state.customExpaned && this.props.isCustomising} onChange={this.onExpandToggle}>
-            <ExpansionPanelSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <Typography className={classes.heading}>Customise Your Own Spectrum</Typography>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-              <div style={{width: '100%'}}>
-                <SpectrumScrollerContainer />
-                <DiodePickerContainer />
-              </div>
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
         </div>
       );
     }

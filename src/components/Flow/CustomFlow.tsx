@@ -6,11 +6,15 @@ import { withStyles, WithStyles, createStyles  } from '@material-ui/core/styles'
 import { SizeStepContainer } from '../Flow/steps/containers/SizeStepContainer';
 import { SpectrumStepPanelContainer } from '../Flow/steps/containers/SpectrumStepPanelContainer';
 
+import { DiodeValidationHelper } from './helpers/DiodeValidationHelper';
+import { LightBarStyle } from '../../types/FlowState';
+
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
+import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
@@ -32,20 +36,36 @@ const styles = (theme: Theme) => createStyles({
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
   },
+  divider: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+  }
 });
 
 export interface ICustomFlowProps extends WithStyles<typeof styles> {
   flowStage?: number;
   diodeSequence?: string[];
+  lightBarStyle?: LightBarStyle;
 
   setFlowStage?: (flowStage: number) => void;
+  setShouldShow: (shouldShow: boolean, message: string, autoHideTimer?: number) => void;
+}
+
+export interface ICustomFlowState {
+  canGoBack: boolean;
+  canGoNext: boolean;
 }
 
 export const CustomFlow = withStyles(styles)(
-  class extends React.Component<ICustomFlowProps>{
+  class extends React.Component<ICustomFlowProps, ICustomFlowState>{
 
     constructor(props : ICustomFlowProps) {
       super(props);
+
+      this.state = {
+        canGoBack: true,
+        canGoNext: true,
+      };
 
       this.handleReset = this.handleReset.bind(this);
     }
@@ -69,6 +89,18 @@ export const CustomFlow = withStyles(styles)(
     } 
 
     public handleNext() : void {
+      var activeStep = this.GetCurrentStep();
+      if (activeStep === 0)
+      {
+        this.StepZeroValidation();
+      } else if (activeStep === 1)
+      {
+        if (!this.StepOneValidation())
+        {
+          return;
+        }
+      }
+
       if (typeof this.props.setFlowStage === 'function' && this.props.flowStage !== undefined)
       {
         this.props.setFlowStage(this.props.flowStage + 1);
@@ -81,22 +113,9 @@ export const CustomFlow = withStyles(styles)(
       const { classes } = this.props;
       var self = this;
 
-      var activeStep = 0
-      if (this.props.flowStage)
-      {
-        activeStep = this.props.flowStage;
-      }
-
+      var activeStep = this.GetCurrentStep();
       var steps = this.getSteps();
-
-      var stepContent = <div />;
-      if (activeStep === 0)
-      {
-        stepContent = <SizeStepContainer />;
-      } else if (activeStep === 1)
-      {
-        stepContent = <SpectrumStepPanelContainer />
-      }
+      var stepContent = this.GetCurrentStepContent();
 
       return (
         <div className={classes.root}>
@@ -122,27 +141,96 @@ export const CustomFlow = withStyles(styles)(
                 {<NavigateNextIcon />}
               </Button>
             </ButtonGroup>
+
+            <Divider variant="middle" className={classes.divider} />
+
             {stepContent}
           </div>
         </div>
       );
     }
 
-    private getSteps() {
-      return ['Choose the size', 'Choose the spectrum', 'Create an ad'];
+    private GetCurrentStep() : number {
+      var activeStep = 0
+      if (this.props.flowStage)
+      {
+        activeStep = this.props.flowStage;
+      }
+
+      return activeStep;
     }
 
-    private getStepContent(step: number) {
-      switch (step) {
-        case 0:
-          return 'Content1';
-        case 1:
-          return 'Content2';
-        case 2:
-          return 'This is the bit I really care about!';
-        default:
-          return 'Unknown step';
+    private GetCurrentStepContent() {
+      var activeStep = this.GetCurrentStep();
+
+      if (activeStep === 0)
+      {
+        return <SizeStepContainer />;
+      } else if (activeStep === 1)
+      {
+        return <SpectrumStepPanelContainer />
       }
+    }
+
+    private StepZeroValidation() {
+      if (this.props.lightBarStyle && !this.state.canGoNext)
+      {
+        this.setState({
+          ...this.state,
+          canGoNext: true,
+        });
+      } 
+      else if (!this.props.lightBarStyle && this.state.canGoNext)
+      {
+        this.setState({
+          ...this.state,
+          canGoNext: false,
+        });
+      }
+    }
+
+    private StepOneValidation() {
+      if (this.props.diodeSequence)
+      {
+        var invalidDiodes = DiodeValidationHelper.IsValid(this.props.diodeSequence);
+        
+        // Invalid
+        if (invalidDiodes.length !== 0)
+        {
+          var message = 'LED not set: ';
+
+          for (var _i = 1; _i <= invalidDiodes.length; _i++)
+          {
+            var endinging = '';
+            if (_i !== invalidDiodes.length)
+            {
+              endinging = ', '
+            }
+
+            message += '#' + invalidDiodes[_i] + endinging
+          }
+
+          this.SetShouldShow(true, message, 5000);
+
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    private SetShouldShow(shouldShow: boolean, message: string, autoHideTimer?: number)
+    {
+      if (typeof this.props.setShouldShow === 'function')
+      {
+        this.props.setShouldShow(shouldShow, message, autoHideTimer);
+      } else {
+        console.error('setFlowStage function or flow stage not available');
+      }
+    }
+
+    private getSteps() {
+      return ['Choose the size', 'Choose the spectrum', 'Confirmation'];
     }
   }
 )

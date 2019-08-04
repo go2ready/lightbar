@@ -47,7 +47,7 @@ export const DiodePicker = withStyles(styles)(
       return (
         <div className={classes.root}>
           <FormControl component="fieldset">
-            <FormLabel component="legend">Led wavelength</FormLabel>
+            <FormLabel>Select the LED using the scroller or choose it from preview</FormLabel>
             <RadioGroup aria-label="position" name="position" value={selection} onChange={self.HandleChange} row>
               {self.CreateRadioSelection()}
             </RadioGroup>

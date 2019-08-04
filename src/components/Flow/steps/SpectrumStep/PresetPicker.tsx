@@ -19,6 +19,7 @@ const styles = (theme: Theme) => createStyles({
   formControl: {
     margin: theme.spacing(1),
     minWidth: 120,
+    verticalAlign: 'center',
   },
   button: {
     margin: theme.spacing(1),
@@ -60,7 +61,7 @@ export const PresetPicker = withStyles(styles)(
         <div>
           <FormControl className={classes.formControl}>
             <InputLabel shrink htmlFor="preset-native-label-placeholder">
-              Preset spectrum
+              Preset Spectrum
             </InputLabel>
             <NativeSelect
               value={this.state.selected}
@@ -70,9 +71,7 @@ export const PresetPicker = withStyles(styles)(
               {this.GetPresetOptions()}
             </NativeSelect>
             <FormHelperText>
-              * It is not possible to mathmatically deduct real <br/>
-              spectrum with 100% accuracy, the one that is      <br/>
-              showing is for reference only. 
+              Select from professionally designed layout
             </FormHelperText>
           </FormControl>
           <Button onClick={this.onClick} variant="outlined" color="primary" className={classes.button}>

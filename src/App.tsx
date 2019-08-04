@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
 import Divider from '@material-ui/core/Divider';
 
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
@@ -12,13 +9,15 @@ import { withStyles, WithStyles, createStyles  } from '@material-ui/core/styles'
 
 import { CustomFlowContainer } from './components/Flow/containers/CustomFlowContainer'
 import { PreviewPanelContainer } from './components/Preview/containers/PreviewPanelContainer'
-import { relative } from 'path';
+import { NotificationHelperContainer } from './components/General/containers/NotificationHelperContainer';
+import { FooterContainer } from './components/General/containers/FooterContainer';
+import { TopBarContainer } from './components/General/containers/TopBarContainer';
 
 const styles = (theme: Theme) => createStyles({
   root: {
     ...theme.mixins.gutters(),
     textAlign: 'center',
-    height: '100%',
+    flex: 1,
   },
   centerRoot: {
     ...theme.mixins.gutters(),
@@ -46,24 +45,17 @@ export const App = withStyles(styles)(
       return (
         <React.Fragment>
           <CssBaseline />
+          <TopBarContainer />
+          <div style={{ paddingTop: 64 }}>
           <PreviewPanelContainer />
-          <div className={classes.root}>
-            <div>
-              <CustomFlowContainer />
+            <div className={classes.root}>
+              <div>
+                <CustomFlowContainer />
+              </div>
+              <Divider variant="middle" />
+              <FooterContainer />
+              <NotificationHelperContainer />
             </div>
-            <Divider variant="middle" />
-            <footer className={classes.footer}>
-              <Container maxWidth="sm">
-                <Typography variant="body1">Saber LED Light bar designer</Typography>
-                <Typography variant="body2" color="textSecondary">
-                  {'Developed by '}
-                  <Link color="inherit" href="https://material-ui.com/">
-                    Coralution Technology Ltd.
-                  </Link>
-                  {'© All rights reserved.'}
-                </Typography>
-              </Container>
-            </footer>
           </div>
         </React.Fragment>
       );
