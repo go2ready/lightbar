@@ -8,6 +8,7 @@ import { SpectrumStepPanelContainer } from '../Flow/steps/containers/SpectrumSte
 
 import { DiodeValidationHelper } from './helpers/DiodeValidationHelper';
 import { LightBarStyle } from '../../types/FlowState';
+import { NotificationType } from '../../types/NotificationStoreState';
 
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -48,7 +49,7 @@ export interface ICustomFlowProps extends WithStyles<typeof styles> {
   lightBarStyle?: LightBarStyle;
 
   setFlowStage?: (flowStage: number) => void;
-  setShouldShow: (shouldShow: boolean, message: string, autoHideTimer?: number) => void;
+  setShouldShow: (shouldShow: boolean, message: string, autoHideTimer?: number, type?: NotificationType) => void;
 }
 
 export interface ICustomFlowState {
@@ -210,7 +211,7 @@ export const CustomFlow = withStyles(styles)(
             message += '#' + invalidDiodes[_i] + endinging
           }
 
-          this.SetShouldShow(true, message, 5000);
+          this.SetShouldShow(true, message, 5000, 'warning');
 
           return false;
         }
@@ -219,11 +220,11 @@ export const CustomFlow = withStyles(styles)(
       return true;
     }
 
-    private SetShouldShow(shouldShow: boolean, message: string, autoHideTimer?: number)
+    private SetShouldShow(shouldShow: boolean, message: string, autoHideTimer?: number, type?: NotificationType)
     {
       if (typeof this.props.setShouldShow === 'function')
       {
-        this.props.setShouldShow(shouldShow, message, autoHideTimer);
+        this.props.setShouldShow(shouldShow, message, autoHideTimer, type);
       } else {
         console.error('setFlowStage function or flow stage not available');
       }

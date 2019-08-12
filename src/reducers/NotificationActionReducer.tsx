@@ -14,6 +14,7 @@ export function NotificationActionReducer(state: INotificationStoreState | undef
       actionId: '',
       shouldShow: false,
       autoHideTimer: 0, // 0 means never auto hide
+      type: 'info',
     }
   }
   
@@ -31,6 +32,7 @@ export function NotificationActionReducer(state: INotificationStoreState | undef
         shouldShow: action.payload.shouldShow,
         message: action.payload.message,
         autoHideTimer: action.payload.autoHideTimer,
+        type: action.payload.type,
       };
     default:
       return state;

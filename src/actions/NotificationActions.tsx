@@ -1,5 +1,5 @@
 import { createAction } from 'typesafe-actions'
-import { INotificationStoreState } from '../types/NotificationStoreState';
+import { INotificationStoreState, NotificationType } from '../types/NotificationStoreState';
 
 export const setMessage = createAction('notification/SET_MESSAGE', resolve => {
   return (message: string) => 
@@ -12,6 +12,6 @@ export const setActionId = createAction('notification/SET_ACTION_ID', resolve =>
 }); 
 
 export const setShouldShow = createAction('notification/SET_SHOULD_SHOW', resolve => {
-  return (shouldShow: boolean, message: string, autoHideTimer?: number) => 
-    resolve({ shouldShow, message, autoHideTimer } as INotificationStoreState);
+  return (shouldShow: boolean, message: string, autoHideTimer?: number, type?: NotificationType) => 
+    resolve({ shouldShow, message, autoHideTimer, type } as INotificationStoreState);
 }); 

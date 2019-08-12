@@ -6,9 +6,9 @@ import { amber, green } from '@material-ui/core/colors';
 
 import clsx from 'clsx';
 
-import { TransitionProps } from '@material-ui/core/transitions/transition'
+import { TransitionProps } from '@material-ui/core/transitions/transition';
+import { NotificationType } from '../../types/NotificationStoreState';
 
-import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import IconButton from '@material-ui/core/IconButton';
@@ -107,8 +107,9 @@ export interface INotificationHelperProps extends WithStyles<typeof styles> {
   shouldShow?: boolean,
   actionId?: string,
   autoHideTimer?: number,
+  type?: NotificationType,
 
-  setShouldShow?: (shouldShow: boolean, message: string, autoHideTimer?: number) => void,
+  setShouldShow?: (shouldShow: boolean, message: string, autoHideTimer?: number, type?: NotificationType) => void,
 };
 
 // TODO: maximum message, message type etc
@@ -132,8 +133,7 @@ export const NotificationHelper = withStyles(styles)(
     }
 
     public render() : JSX.Element {
-      const { classes, shouldShow, message, autoHideTimer } = this.props;
-      var self = this;
+      const { classes, shouldShow, message, autoHideTimer, type } = this.props;
 
       return (
         <Snackbar
@@ -147,7 +147,7 @@ export const NotificationHelper = withStyles(styles)(
           TransitionComponent={Transition}
         >
           <MySnackbarContentWrapper
-            variant="warning"
+            variant={type === undefined ? 'info' : type}
             className={classes.margin}
             message={this.shortenMessageInRange(message)}
             onClose={this.onClose}

@@ -60,6 +60,5 @@ export const App = withStyles(styles)(
         </React.Fragment>
       );
     }
-
   }
 );

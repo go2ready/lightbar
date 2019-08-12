@@ -6,6 +6,7 @@ import { Dispatch } from 'redux';
 import { RootAction } from '../../../types/Index';
 import { setFlowStage } from '../../../actions/FlowAction';
 import { setShouldShow} from '../../../actions/NotificationActions';
+import { NotificationType } from '../../../types/NotificationStoreState';
 
 export function mapStateToProps(state: RootState) {
   const { flow: { flowStage, lightBarStyle }, preview: { diodeSequence }} = state;
@@ -20,8 +21,8 @@ export function mapDispatchToProps(dispatch: Dispatch<RootAction>) {
   return {
     setFlowStage: (flowStage: number) => dispatch(setFlowStage(flowStage)),
 
-    setShouldShow: (shouldShow: boolean, message: string, autoHideTimer?: number) => 
-      dispatch(setShouldShow(shouldShow, message, autoHideTimer)),
+    setShouldShow: (shouldShow: boolean, message: string, autoHideTimer?: number, type?: NotificationType) => 
+      dispatch(setShouldShow(shouldShow, message, autoHideTimer, type)),
   }
 }
 

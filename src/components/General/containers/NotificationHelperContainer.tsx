@@ -4,22 +4,24 @@ import { Dispatch } from 'redux';
 
 import { NotificationActions } from '../../../reducers/NotificationActionReducer';
 import { setShouldShow } from '../../../actions/NotificationActions';
+import { NotificationType } from '../../../types/NotificationStoreState';
 import { RootState } from '../../../types/Index'
 
 export function mapStateToProps(state: RootState) {
-  const { notification: { message, shouldShow, actionId, autoHideTimer }} = state;
+  const { notification: { message, shouldShow, actionId, autoHideTimer, type }} = state;
   return {
     message,
     shouldShow,
     actionId,
     autoHideTimer,
+    type,
   }
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<NotificationActions>) {
   return {
-    setShouldShow: (shouldShow: boolean, message: string, autoHideTimer?: number) => 
-      dispatch(setShouldShow(shouldShow, message, autoHideTimer))
+    setShouldShow: (shouldShow: boolean, message: string, autoHideTimer?: number, type?: NotificationType) => 
+      dispatch(setShouldShow(shouldShow, message, autoHideTimer, type))
   }
 }
 
